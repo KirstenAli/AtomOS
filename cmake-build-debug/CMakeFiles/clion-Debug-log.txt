@@ -1,6 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/kirstenali/CLionProjects/AtomOS -B /Users/kirstenali/CLionProjects/AtomOS/cmake-build-debug
--- The ASM compiler identification is AppleClang
--- Found assembler: /usr/bin/cc
--- Configuring done (0.1s)
--- Generating done (0.0s)
--- Build files have been written to: /Users/kirstenali/CLionProjects/AtomOS/cmake-build-debug
