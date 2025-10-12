@@ -36,7 +36,7 @@ make run
 
 ---
 
-## 🧭 Next Steps
+## 📋 To Do
 
 - Tiny terminal output (VGA helpers)
 - Keyboard input (polling)
