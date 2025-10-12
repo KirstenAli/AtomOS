@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.svg" width="100" alt="AtomOS logo">
+  <img src="logo.svg" width="140" alt="AtomOS logo">
 </p>
 
 **AtomOS** is a tiny educational operating system written in C and x86 assembly.  
