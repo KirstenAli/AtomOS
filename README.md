@@ -3,7 +3,6 @@
 </p>
 
 **AtomOS** is a tiny educational operating system kernel written in C and x86 assembly.
-It boots via GRUB (Multiboot) and runs freestanding—without an underlying OS or standard library.
 
 <p align="center">
   <img src="https://img.shields.io/badge/language-C-blue?style=flat-square" alt="C">
