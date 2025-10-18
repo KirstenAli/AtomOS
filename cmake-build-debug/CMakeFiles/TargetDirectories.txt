@@ -1,0 +1,3 @@
+/Users/kirstenali/CLionProjects/AtomOS/cmake-build-debug/CMakeFiles/atomos_dummy.dir
+/Users/kirstenali/CLionProjects/AtomOS/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/kirstenali/CLionProjects/AtomOS/cmake-build-debug/CMakeFiles/rebuild_cache.dir
