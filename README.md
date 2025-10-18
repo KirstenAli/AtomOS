@@ -2,7 +2,7 @@
   <img src="logo.svg" width="140" alt="AtomOS logo">
 </p>
 
-**AtomOS** is a tiny educational operating system kernel written in C and x86 assembly.
+**AtomOS** is a tiny educational operating system written in C and x86 assembly.
 
 <p align="center">
   <img src="https://img.shields.io/badge/language-C-blue?style=flat-square" alt="C">
