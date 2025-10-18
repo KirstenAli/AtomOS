@@ -12,16 +12,6 @@
 
 ---
 
-## 🚀 Features
-
-- Bootable via **GRUB (Multiboot spec)**
-- Written in **pure C + minimal x86 assembly**
-- Runs in **32-bit protected mode**
-- Prints directly to **VGA text buffer (0xB8000)**
-- Minimal kernel — perfect for learning low-level concepts
-
----
-
 ## 🧰 Build & Run (macOS)
 
 ### Install dependencies
