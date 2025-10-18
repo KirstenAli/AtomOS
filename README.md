@@ -35,20 +35,4 @@ make run
 
 ---
 
-## 📋 To Do
-
-- Tiny terminal output (VGA helpers)
-- Keyboard input (polling)
-- Programmable Interval Timer (PIT)
-- Frame loop & simple renderer
-- Color support
-- Panic screen
-- IDT (interrupts)
-- PIC remap
-- GDT (own descriptors)
-- Parse Multiboot memory map
-- Paging (MMU)
-- Simple memory allocator
-
-
 
