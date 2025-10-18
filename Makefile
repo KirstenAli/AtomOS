@@ -1,35 +1,66 @@
-TARGET   = i686-elf
-CC       = $(TARGET)-gcc
-LD       = $(TARGET)-ld
-AS       = $(TARGET)-as
-GRUBMK   = i686-elf-grub-mkrescue
-QEMU     = qemu-system-i386
+# Cross toolchain
+CROSS_CC := i686-elf-gcc
+CROSS_LD := i686-elf-ld
 
-CFLAGS   = -m32 -ffreestanding -Os -fno-stack-protector -fno-pic -nostdlib -Wall -Wextra
-LDFLAGS  = -m elf_i386 -T linker.ld -nostdlib
+# Flags
+CFLAGS   := -m32 -ffreestanding -Os -fno-stack-protector -fno-pic -nostdlib -Wall -Wextra -Iinclude
+LDFLAGS  := -m elf_i386 -T linker.ld -nostdlib
 
-.PHONY: all iso run clean
+# Sources
+SRC_C := \
+  drivers/vga.c \
+  drivers/console.c \
+  drivers/keyboard.c \
+  lib/util.c \
+  lib/input.c \
+  apps/parser.c \
+  apps/calc.c \
+  kernel/kernel.c
 
+OBJ_C := $(SRC_C:.c=.o)
+
+# Phony
+.PHONY: all clean run iso grubiso run_iso check_grub
+
+# Default
 all: kernel.elf
 
-kernel.o: kernel.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Assemble boot in arch/
+arch/boot.o: arch/boot.S
+	$(CROSS_CC) $(CFLAGS) -c $< -o $@
 
-multiboot_header.o: multiboot_header.S
-	$(AS) --32 $< -o $@
+# Compile C
+%.o: %.c
+	$(CROSS_CC) $(CFLAGS) -c $< -o $@
 
-kernel.elf: multiboot_header.o kernel.o linker.ld
-	$(LD) $(LDFLAGS) -o $@ multiboot_header.o kernel.o
+# Link kernel
+kernel.elf: arch/boot.o $(OBJ_C)
+	$(CROSS_LD) $(LDFLAGS) -o $@ $^
 
+# Run directly (no ISO needed)
+run: kernel.elf
+	qemu-system-i386 -kernel kernel.elf
+
+# Stage ELF in iso/ (no ISO creation)
 iso: kernel.elf
-	mkdir -p iso/boot/grub
-	cp kernel.elf iso/boot/
-	$(GRUBMK) -o atomos.iso iso
+	mkdir -p iso/boot
+	cp kernel.elf iso/boot/kernel.elf
 
-run: iso
-	$(QEMU) -cdrom atomos.iso
+# Optional GRUB ISO (requires grub-mkrescue + xorriso)
+check_grub:
+	@command -v grub-mkrescue >/dev/null 2>&1 || { \
+	  echo "grub-mkrescue not found. On macOS: brew install qemu xorriso grub-pc-bin"; \
+	  exit 1; }
+
+grubiso: check_grub kernel.elf
+	mkdir -p iso/boot/grub
+	cp kernel.elf iso/boot/kernel.elf
+	printf 'set timeout=0\nset default=0\n\nmenuentry \"AtomOS\" {\n    multiboot /boot/kernel.elf\n    boot\n}\n' > iso/boot/grub/grub.cfg
+	grub-mkrescue -o atomos.iso iso
+
+run_iso: grubiso
+	qemu-system-i386 -cdrom atomos.iso
 
 clean:
-	rm -f *.o *.elf atomos.iso
-	rm -rf iso/boot/kernel.elf
-
+	rm -f arch/boot.o $(OBJ_C) kernel.elf kernel.o
+	rm -rf iso atomos.iso

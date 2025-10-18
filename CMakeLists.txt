@@ -5,8 +5,7 @@ set(CMAKE_C_STANDARD 11)
 
 # This is just for syntax highlighting, not building
 add_executable(atomos_dummy
-        kernel.c
-        multiboot_header.S
+        kernel/kernel.c
 )
 
 # Prevent trying to link system libraries

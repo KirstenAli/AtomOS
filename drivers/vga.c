@@ -1,0 +1,59 @@
+#include "vga.h"
+#include "../include/common.h"
+
+#define VGA_MEM ((volatile uint16_t*)0xB8000)
+
+static uint8_t g_color = DEFAULT_COLOR;
+static int cursor = 0; /* linear index */
+
+static inline uint16_t make_cell(char c, uint8_t color) {
+    return (uint16_t) c | ((uint16_t) color << 8);
+}
+
+static inline void scroll_if_needed(void) {
+    if (cursor < COLS * ROWS) return;
+    /* scroll up one row */
+    for (int i = 0; i < COLS * (ROWS - 1); i++)
+        VGA_MEM[i] = VGA_MEM[i + COLS];
+    for (int i = COLS * (ROWS - 1); i < COLS * ROWS; i++)
+        VGA_MEM[i] = make_cell(' ', g_color);
+    cursor = COLS * (ROWS - 1);
+}
+
+void vga_init(uint8_t color) {
+    g_color = color;
+    vga_clear();
+}
+
+void vga_set_color(uint8_t color) { g_color = color; }
+
+void vga_clear(void) {
+    for (int i = 0; i < COLS * ROWS; i++)
+        VGA_MEM[i] = make_cell(' ', g_color);
+    cursor = 0;
+}
+
+void vga_putc(char c) {
+    if (c == '\n') {
+        cursor += COLS - (cursor % COLS);
+        scroll_if_needed();
+        return;
+    }
+    if (c == '\r') {
+        cursor -= (cursor % COLS);
+        return;
+    }
+    if (c == '\b') {
+        if (cursor > 0) {
+            cursor--;
+            VGA_MEM[cursor] = make_cell(' ', g_color);
+        }
+        return;
+    }
+    VGA_MEM[cursor++] = make_cell(c, g_color);
+    if (cursor % COLS == 0) scroll_if_needed();
+}
+
+void vga_write(const char *s) {
+    for (int i = 0; s[i]; i++) vga_putc(s[i]);
+}

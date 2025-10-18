@@ -1,22 +1,18 @@
-# Build artifacts
+# Build artefacts
 *.o
 *.elf
 *.iso
 
-# GRUB build folders
-iso/boot/kernel.elf
-iso/boot/grub/*.cfg~
-iso/boot/grub/*.bak
+# ISO staging
+/iso/
+/atomos.iso
 
-# Editor and OS files
+# QEMU logs
+qemu-*.log
+
+# Editor/OS junk
 .DS_Store
-.idea/
-*.iml
 .vscode/
-
-# Temporary files
+.idea/
 *.swp
 *~
-
-# CLion / CMake build directories
-cmake-build-*/
