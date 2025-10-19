@@ -1,6 +1,6 @@
 #include <stdbool.h>
 #include "parser.h"
-#include "../lib/util.h"
+#include "../../lib/util.h"
 
 static bool parse_int(const char *s, int *i, int *out) {
     int sign = 1, val = 0, idx = *i;

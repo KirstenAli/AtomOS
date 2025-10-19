@@ -1,7 +1,7 @@
 #include "calc.h"
 #include "parser.h"
-#include "../drivers/console.h"
-#include "../lib/input.h"
+#include "../../drivers/console.h"
+#include "../../lib/input.h"
 
 #define LINE_MAX 128
 

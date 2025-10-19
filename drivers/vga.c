@@ -1,7 +1,10 @@
 #include "vga.h"
+#include "../arch/ports.h"
 #include "../include/common.h"
 
 #define VGA_MEM ((volatile uint16_t*)0xB8000)
+#define CRT_IDX  0x3D4
+#define CRT_DATA 0x3D5
 
 static uint8_t g_color = DEFAULT_COLOR;
 static int cursor = 0; /* linear index */
@@ -56,4 +59,21 @@ void vga_putc(char c) {
 
 void vga_write(const char *s) {
     for (int i = 0; s[i]; i++) vga_putc(s[i]);
+}
+
+void vga_disable_cursor(void) {
+    /* Set bit 5 (cursor disable) in Cursor Start register (0x0A) */
+    outb(CRT_IDX, 0x0A);
+    outb(CRT_DATA, 0x20);
+}
+
+void vga_enable_cursor(uint8_t start, uint8_t end) {
+    outb(CRT_IDX, 0x0A); outb(CRT_DATA, (inb(CRT_DATA) & 0xC0) | (start & 0x1F));
+    outb(CRT_IDX, 0x0B); outb(CRT_DATA, (inb(CRT_DATA) & 0xE0) | (end   & 0x1F));
+}
+
+void vga_move_cursor(int x, int y) {
+    uint16_t pos = (uint16_t)(y * COLS + x);
+    outb(CRT_IDX, 0x0F); outb(CRT_DATA, (uint8_t)(pos & 0xFF));
+    outb(CRT_IDX, 0x0E); outb(CRT_DATA, (uint8_t)(pos >> 8));
 }

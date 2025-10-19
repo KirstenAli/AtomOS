@@ -13,8 +13,11 @@ SRC_C := \
   drivers/keyboard.c \
   lib/util.c \
   lib/input.c \
-  apps/parser.c \
-  apps/calc.c \
+  apps/calc/calc.c \
+  apps/calc/parser.c \
+  apps/registry.c \
+  ui/ui.c \
+  ui/menu.c \
   kernel/kernel.c
 
 OBJ_C := $(SRC_C:.c=.o)

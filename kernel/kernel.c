@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include "../include/common.h"
 #include "../drivers/console.h"
-#include "../apps/calc.h"
+#include "../ui/menu.h"
 
 __attribute__((noreturn)) static inline void halt_forever(void) {
     for (;;) __asm__ __volatile__("hlt");
@@ -9,7 +9,6 @@ __attribute__((noreturn)) static inline void halt_forever(void) {
 
 void kmain(void) {
     console_init(DEFAULT_COLOR);
-    console_write("AtomOS (C)\n");
-    calc_run();
+    menu_run_loop(); /* never returns; loops between menus and apps */
     halt_forever();
 }
