@@ -25,14 +25,4 @@ make run
 
 ---
 
-## 🖥️ Preview
-
-<p align="center">
-  <img src="preview.png" width="640" alt="AtomOS boot preview">
-</p>
-
-*(Boot screen shown in QEMU — displaying AtomOS (C) main menu.)*
-
----
-
 
