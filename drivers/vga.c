@@ -68,12 +68,16 @@ void vga_disable_cursor(void) {
 }
 
 void vga_enable_cursor(uint8_t start, uint8_t end) {
-    outb(CRT_IDX, 0x0A); outb(CRT_DATA, (inb(CRT_DATA) & 0xC0) | (start & 0x1F));
-    outb(CRT_IDX, 0x0B); outb(CRT_DATA, (inb(CRT_DATA) & 0xE0) | (end   & 0x1F));
+    outb(CRT_IDX, 0x0A);
+    outb(CRT_DATA, (inb(CRT_DATA) & 0xC0) | (start & 0x1F));
+    outb(CRT_IDX, 0x0B);
+    outb(CRT_DATA, (inb(CRT_DATA) & 0xE0) | (end & 0x1F));
 }
 
 void vga_move_cursor(int x, int y) {
-    uint16_t pos = (uint16_t)(y * COLS + x);
-    outb(CRT_IDX, 0x0F); outb(CRT_DATA, (uint8_t)(pos & 0xFF));
-    outb(CRT_IDX, 0x0E); outb(CRT_DATA, (uint8_t)(pos >> 8));
+    uint16_t pos = (uint16_t) (y * COLS + x);
+    outb(CRT_IDX, 0x0F);
+    outb(CRT_DATA, (uint8_t) (pos & 0xFF));
+    outb(CRT_IDX, 0x0E);
+    outb(CRT_DATA, (uint8_t) (pos >> 8));
 }
