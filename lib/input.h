@@ -1,5 +1,3 @@
-#ifndef INPUT_H
-#define INPUT_H
+#pragma once
 
 int input_read_line(char *buf, int maxlen, const char *prompt);
-#endif

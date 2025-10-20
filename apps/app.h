@@ -1,10 +1,7 @@
-#ifndef APP_H
-#define APP_H
+#pragma once
 
 typedef struct {
     const char *name;
 
     void (*run)(void);
 } App;
-
-#endif

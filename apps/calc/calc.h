@@ -1,5 +1,3 @@
-#ifndef CALC_H
-#define CALC_H
+#pragma once
 
 void calc_run(void);
-#endif

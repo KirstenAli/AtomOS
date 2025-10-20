@@ -1,5 +1,4 @@
-#ifndef CONSOLE_H
-#define CONSOLE_H
+#pragma once
 #include <stdint.h>
 
 void console_init(uint8_t color);
@@ -13,5 +12,3 @@ void console_write(const char *s);
 void console_newline(void);
 
 void console_write_dec(int value);
-
-#endif

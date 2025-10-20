@@ -1,5 +1,3 @@
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#pragma once
 
 char kbd_getch_blocking(void);
-#endif

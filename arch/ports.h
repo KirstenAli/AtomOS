@@ -1,6 +1,4 @@
-#ifndef PORTS_H
-#define PORTS_H
-
+#pragma once
 #include <stdint.h>
 
 /*
@@ -46,5 +44,3 @@ static inline void io_wait(void) {
 }
 
 #endif /* x86 */
-
-#endif /* PORTS_H */
